@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message ShortenedResponse {
+    optional string slug = 1;
+    optional string error_message = 2;
+}
