@@ -1,9 +1,20 @@
 <script lang="ts">
+  import { ShortenUrl } from "../protos/shorten-url-post";
   let url: string | null;
+
+  function handleSubmit() {
+    let request = JSON.stringify({ url: url } as ShortenUrl);
+    fetch("/api/generate-url", {
+      method: "POST",
+      body: request,
+    });
+  }
 </script>
+
 <form
   method="POST"
   action="/api/generate-url"
+  on:submit|preventDefault={handleSubmit}
 >
   <h1>URL Shortener</h1>
   <h2>Paste the URL to be shortened!</h2>
