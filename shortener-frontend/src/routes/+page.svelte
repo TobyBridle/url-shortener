@@ -1,13 +1,18 @@
 <script lang="ts">
   import { ShortenUrl } from "../protos/shorten-url-post";
+  import { ShortenedResponse } from "../protos/shortened-url-response";
   let url: string | null;
+  let slug: string | undefined;
+  $: slug = undefined;
 
-  function handleSubmit() {
+  async function handleSubmit() {
     let request = JSON.stringify({ url: url } as ShortenUrl);
-    fetch("/api/generate-url", {
+    let res = await fetch("/api/generate-url", {
       method: "POST",
       body: request,
-    });
+      headers: { "Content-Type": "application/json"} 
+    }).then(async _res => ShortenedResponse.fromJson(await _res.json()));
+    slug = res.slug;
   }
 </script>
 
@@ -27,6 +32,9 @@
   />
   <button type="submit" disabled={url == null}>Shorten</button>
 </form>
+{ #if slug != undefined }
+  Your new URL is {location.protocol}//{location.hostname}/{slug}
+{/if}
 
 <style>
   form input {
