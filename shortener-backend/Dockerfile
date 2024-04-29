@@ -21,4 +21,6 @@ COPY --from=builder /app-backend/target/release/shortener-backend /usr/local/bin
 # For some reason, within the container, rocket does not seem to take Rocket.toml into account
 ENV ROCKET_ADDRESS=0.0.0.0
 EXPOSE 8000
+RUN apt update
+RUN apt-get install -y libmariadb-dev libsqlite3-dev libpq-dev
 ENTRYPOINT ["/usr/local/bin/shortener-backend"]

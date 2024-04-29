@@ -9,6 +9,10 @@ edition = "2021"
 rocket = "0.5.0"
 protobuf-json-mapping = "3.4.0"
 protobuf = "3.4.0"
+diesel_cli = "2.1.1"
+diesel = { version = "2.1.6", features = ["postgres"] }
+dotenvy = "0.15.7"
+uuid = { version = "1.8.0", features = ["v4"] }
 
 [build-dependencies]
 protobuf-codegen = "3.4.0"
