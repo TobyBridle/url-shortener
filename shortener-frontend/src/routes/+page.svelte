@@ -1,82 +1,54 @@
 <script lang="ts">
-  import { ShortenUrl } from "../protos/shorten-url-post";
-  import { ShortenedResponse } from "../protos/shortened-url-response";
-  let url: string | null;
-  let slug: string | undefined;
-  $: slug = undefined;
-
-  async function handleSubmit() {
-    let request = JSON.stringify({ url: url } as ShortenUrl);
-    let res = await fetch("/api/generate-url", {
-      method: "POST",
-      body: request,
-      headers: { "Content-Type": "application/json"} 
-    }).then(async _res => ShortenedResponse.fromJson(await _res.json()));
-    slug = res.slug;
-  }
+    import ShortenTag from "../components/shorten_form.svelte";
 </script>
 
-<form
-  method="POST"
-  action="/api/generate-url"
-  on:submit|preventDefault={handleSubmit}
->
-  <h1>URL Shortener</h1>
-  <h2>Paste the URL to be shortened!</h2>
-  <input
-    type="url"
-    name="url"
-    aria-label="URL to Shorten"
-    bind:value={url}
-    on:emptied={(url = null)}
-  />
-  <button type="submit" disabled={url == null}>Shorten</button>
-</form>
-{ #if slug != undefined }
-  Your new URL is {location.protocol}//{location.hostname}/{slug}
-{/if}
-
+<h1>Shorten Your URL</h1>
+<ShortenTag />
+<p>
+Shortened URLs keep track of how many “hits” (uses of the shortened url) there are.
+<br/>
+This data is accessible to signed in users, yet is stored within the database regardless.
+<br/>
+<br/>
+To create an account, <a href="#">click here</a>.
+</p>
+<footer><span>Made with ❤️</span><span>Source code is available on <a href="https://github.com/tobybridle/url-shortener">GitHub</a></span></footer>
 <style>
-  form input {
-    color: black;
-  }
-  form button {
-    outline: 0;
-    border: 0;
-    border-radius: 0.3em;
-    background-color: white;
-  }
+    :root {
+        --body-background: #f3f3f3;
+        --subtext-foreground: #A4A4A4;
+    }
+    :global(body) {
+        background-color: var(--body-background);
+        padding: 5% 5%;
+    }
+    h1 {
+        width: 20rem;
+        font-size: 3.5rem;
+        font-family: "Inter", sans-serif;
+        font-weight: 900;
+        text-transform: uppercase;
+        padding-bottom: 2.5rem;
+    }
 
-  :global(body) {
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      "Open Sans",
-      "Helvetica Neue",
-      sans-serif;
-    color: white;
-    background-color: rgba(14, 14, 14, 1);
-  }
-  :global(body::before) {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    /* background-color: black; */
-    background-size: 40px 40px;
-    background-image: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.2) 1px,
-      rgba(255, 255, 255, 0) 1px
-    );
-  }
+    p, span {
+        font-family: "Inter", sans-serif;
+        color: var(--subtext-foreground);
+        line-height: 1.4;
+    }
+
+    footer {
+        position: absolute;
+        bottom: 5%;
+
+        display: flex;
+        flex-direction: column;
+    }
+    
+    @media only screen and (max-width: 500px) {
+        h1 {
+            font-size: 3.2rem;
+            padding-bottom: 0;
+        }
+    }
 </style>
