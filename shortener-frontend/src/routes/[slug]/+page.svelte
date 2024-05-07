@@ -17,9 +17,8 @@
                                 ),
                         );
                         // Prevent the shortened link from being in the history
-                        window.history.back();
-                        // Relocate the user
-                        window.location.href = expanded_url;
+                        // and relocate the user
+                        window.location.replace(expanded_url);
                     });
                 } else {
                     console.error(res.statusText);
