@@ -13,6 +13,7 @@ diesel_cli = "2.1.1"
 diesel = { version = "2.1.6", features = ["postgres"] }
 dotenvy = "0.15.7"
 uuid = { version = "1.8.0", features = ["v4"] }
+url = "2.5.0"
 
 [build-dependencies]
 protobuf-codegen = "3.4.0"

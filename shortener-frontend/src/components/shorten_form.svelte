@@ -23,6 +23,7 @@
       .then(async (_res) => ShortenedResponse.fromJson(await _res.json()))
       .then((res) => {
         slug = res.slug;
+        error_message = res?.errorMessage;
         slug != null && prev_urls.set(url as string, slug);
       })
       .catch((e) => {
@@ -37,7 +38,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-    rel="stylesheet"
+    rel="preload"
+    as="font"
   />
 </svelte:head>
 
