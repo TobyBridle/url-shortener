@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS slug_db;
+DROP TABLE IF EXISTS url_db;
